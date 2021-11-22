@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>しらべたword</title>
+</head>
+<body>
+<h1>しらべたword</h1>
+<!--<h2>ここに一覧が表示され、そこをトップページに</h2>-->
+<% @memos.each do |memo| %>
+  <ul>
+    <!--    "id"のところを、memosのインデックスの数字を工夫することで実現させる-->
+    <li><a href="/memos/<%= @memos[0]["id"] %>"><%= memo["title"] %></a></li>
+  </ul>
+<% end %>
+<div><a href="/memos/new"><input type="submit" value="追加"></a></div>
+<p><%= @memos %></p>
+<p><%= @memos[0]["id"] %></p>
+</body>
+</html>

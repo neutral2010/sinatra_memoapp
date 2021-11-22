@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>しらべたword</title>
+</head>
+<body>
+<h1>しらべたword</h1>
+<h2>調べた用語を登録しよう</h2>
+<form action="/memos/:id" method="post">
+<!--  <div>id</div>-->
+<!--  <div><input type="text" name="id" ></div>-->
+  <div>用語</div>
+  <div><input type="text" name="title" id="title"></div><div>意味</div>
+  <div><textarea name="content" id="content"></textarea></div>
+  <div><input type="submit" value="保存"></div>
+  <div><a href="/">一覧へ</a></div>
+</form>
+</body>
+</html>
