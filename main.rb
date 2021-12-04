@@ -6,12 +6,10 @@ require 'json'
 # トップページ一覧表示
 get '/' do
   # 作成されたjsonファイル
-  all_files = Dir.glob('./db/*.json')
-  # jsonファイルを一つづつrubyのハッシュに変換
-  @memos = all_files.map {|file| JSON.parse(File.open(file).read)}
+  all_files = Dir.glob('db/*.json')
   # @memosは、ハッシュ(jsonファイルがハッシュ化されたもの）が要素の配列
-  # ex [{"title"=>"", "content"=>"", "created_at"=>"2021-11-19 22:09:00 +0900"}, {"title"=>"", "content"=>"", #"created_at"=>"2021-11-19 22:51:07 +0900"}, {"id"=>":id", "title"=>"プリン", "content"=>"カスタード", #"created_at"=>"2021-11-20 02:37:00 +0900"}, {"id"=>":id", "title"=>"moko", "content"=>"kuroneko", #"created_at"=>"2021-11-20 02:44:22 +0900"}]
-  erb :index
+  @memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true)}
+    erb :index
 end
 # index リストでタイトルが表示されている。タイトルから各詳細ページへのリンクと`追加`ボタン（これは新規作成画面に）
 
@@ -24,24 +22,26 @@ end
 # 新規メモ作成
 post '/memos/:id' do
   memo = {
-    "id" => Time.now, # 🤔
+    "id" => SecureRandom.uuid,
     "title" => params["title"],
     "content" => params["content"],
     "created_at" => Time.now
   }
 
-  @memos = File.open("./db/memos_#{memo["created_at"]}.json", 'w') do |file|
+  File.open("./db/memos_#{memo["id"]}.json", 'w') do |file|
     JSON.dump(memo, file)
-    end
+  end
  # 成功したら、トップページ（一覧表示画面へ）
   redirect '/'
 end
 
 # 各メモ詳細表示
+
 get '/memos/:id' do
-  # @id = params[:id]
-  "Hello World"
-  # erb :show
+  @id = params[:id]
+  all_files = Dir.glob('db/*.json')
+  @memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true)}
+  erb :show
   # 変更ボタン → /memos/:id/edit
   # 削除ボタン
 end
