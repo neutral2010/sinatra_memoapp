@@ -39,11 +39,9 @@ end
 
 get '/memos/:id' do
   @id = params[:id]
-  all_files = Dir.glob('db/*.json')
-  @memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true)}
+  file_name = File.basename("db/memos_#{@id}.json")
+  @memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
   erb :show
-  # 変更ボタン → /memos/:id/edit
-  # 削除ボタン
 end
 
 # 各メモを変更を編集する画面表示
