@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>しらべたword</title>
-</head>
-<h1>しらべたWord</h1>
-<body>
+<!--<!DOCTYPE html>-->
+<!--<html lang="ja">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>しらべたword</title>-->
+<!--</head>-->
+<h1>My favorite</h1>
+<!--<body>-->
 <p><%= @memo[:title] %></p>
 <p><%= @memo[:content] %></p>
-<!--戻るボタン-->
-<!--変更ボタン → /memos/:id/edit-->
-<!--削除ボタン-->
-</body>
-</html>
+<p><%= @memo[:id] %></p>
+<div><a href="/"><input type="submit" value="一覧へ"></a></div>
+<div><a href="/memos/<%= @memo[:id] %>/edit"><input type="submit" value="編集"></a></div>
+
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="削除">
+
+<!--</body>-->
+<!--</html>-->
