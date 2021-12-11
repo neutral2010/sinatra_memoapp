@@ -11,9 +11,11 @@
 <p><%= @memo[:id] %></p>
 <div><a href="/"><input type="submit" value="一覧へ"></a></div>
 <div><a href="/memos/<%= @memo[:id] %>/edit"><input type="submit" value="編集"></a></div>
-
+<form action="/memos/<%= @memo[:id] %>" method="post">
   <input type="hidden" name="_method" value="DELETE">
+<!--  <div><input type="submit" value="変更"></div>-->
   <input type="submit" value="削除">
+</form>
 
 <!--</body>-->
 <!--</html>-->

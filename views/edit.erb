@@ -6,7 +6,6 @@
   <div>Description</div>
   <div><textarea name="content" id="content"><%= @memo[:content] %></textarea></div>
   <div><input type="submit" value="変更"></div>
-<!--  <input type="hidden" name="_method" value="PUT">-->
-<!--  <div><a href="/memos/<%#= @memo[:id] %>">戻る</a></div>-->
+  <div><a href="/memos/<%= @memo[:id] %>">戻る</a></div>
 <!--  <div><a href="/">戻る<%#= @memo[:id] %></a></div>-->
 </form>

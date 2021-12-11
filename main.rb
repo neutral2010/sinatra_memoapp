@@ -5,7 +5,6 @@ require 'json'
 
 # トップページ一覧表示
 get '/' do
-  # 作成されたjsonファイル
   all_files = Dir.glob('db/*.json')
   # @memosは、ハッシュ(jsonファイルがハッシュ化されたもの）が要素の配列
   @memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true) }
@@ -17,7 +16,6 @@ get '/memos/new' do
   erb :new
 end
 
-
 # 新規メモ作成
 post '/memos/:id' do
   memo = {
@@ -26,7 +24,6 @@ post '/memos/:id' do
     "content" => params["content"],
     "created_at" => Time.now
   }
-
   File.open("./db/memos_#{memo["id"]}.json", 'w') do |file|
     JSON.dump(memo, file)
   end
@@ -35,7 +32,6 @@ post '/memos/:id' do
 end
 
 # 各メモ詳細表示
-
 get '/memos/:id' do
   @id = params[:id]
   file_name = File.basename("db/memos_#{@id}.json")
@@ -48,7 +44,6 @@ get '/memos/:id/edit' do
   @id = params[:id]
   file_name = File.basename("db/memos_#{@id}.json")
   @memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
-  p @memo[:id]
   erb :edit
 end
 
@@ -56,17 +51,13 @@ end
 patch '/memos/:id' do
   @id = params[:id]
   file_name = File.basename("db/memos_#{@id}.json")
-  # p file_name
   memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
-  # p memo[:title]
-
   memo = {
     "id" => memo[:id],
     "title" => params[:title],
     "content" => params[:content],
     "created_at" => Time.now
   }
-  # p memo[:title]
 
   File.open("./db/#{file_name}", 'w') do |file|
     JSON.dump(memo, file)
@@ -74,16 +65,13 @@ patch '/memos/:id' do
 
   file_name = File.basename("db/memos_#{@id}.json")
   memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
-  # p memo[:title]
-
   # 成功したら、詳細表示画面へ
   redirect("/memos/#{@id}")
 end
 
 # 各メモ削除 ← 削除ボタンから来るところ
-delete '/' do
+delete '/memos/:id' do
   @id = params[:id]
-  # File.delete("db/memos_#{@id}.json")
   File.delete("./db/memos_#{@id}.json")
   # 成功したら、トップページ（一覧表示画面へ）
   redirect '/'
