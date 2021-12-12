@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
 require 'json'
+require "cgi"
 
 # トップページ一覧表示
 get '/' do
@@ -20,8 +21,8 @@ end
 post '/memos/:id' do
   memo = {
     "id" => SecureRandom.uuid,
-    "title" => params["title"],
-    "content" => params["content"],
+    "title" => CGI.escapeHTML(params["title"]),
+    "content" => CGI.escapeHTML(params["content"]),
     "created_at" => Time.now
   }
   File.open("./db/memos_#{memo["id"]}.json", 'w') do |file|
@@ -54,8 +55,8 @@ patch '/memos/:id' do
   memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
   memo = {
     "id" => memo[:id],
-    "title" => params[:title],
-    "content" => params[:content],
+    "title" => CGI.escapeHTML(params[:title]),
+    "content" => CGI.escapeHTML(params[:content]),
     "created_at" => Time.now
   }
 
