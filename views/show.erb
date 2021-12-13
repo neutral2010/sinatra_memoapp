@@ -1,21 +1,11 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="ja">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <title>しらべたword</title>-->
-<!--</head>-->
 <h1>My favorite</h1>
-<!--<body>-->
+<h2>Favorite</h2>
 <p><%= @memo[:title] %></p>
+<h2>Description</h2>
 <p><%= @memo[:content] %></p>
-<p><%= @memo[:id] %></p>
 <div><a href="/"><input type="submit" value="一覧へ"></a></div>
 <div><a href="/memos/<%= @memo[:id] %>/edit"><input type="submit" value="編集"></a></div>
 <form action="/memos/<%= @memo[:id] %>" method="post">
   <input type="hidden" name="_method" value="DELETE">
-<!--  <div><input type="submit" value="変更"></div>-->
   <input type="submit" value="削除">
 </form>
-
-<!--</body>-->
-<!--</html>-->

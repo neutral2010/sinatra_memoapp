@@ -4,6 +4,21 @@ require 'erb'
 require 'json'
 require "cgi"
 
+helpers do
+  def file_name
+    File.basename("db/memos_#{@id}.json")
+    # File.basename("db/memos_params[:id].json")
+  end
+
+  def memo_from_file_name(file_name)
+    JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  end
+end
+
+not_found do
+  'ファイルが存在しません'
+end
+
 # トップページ一覧表示
 get '/' do
   all_files = Dir.glob('db/*.json')
@@ -35,24 +50,30 @@ end
 # 各メモ詳細表示
 get '/memos/:id' do
   @id = params[:id]
-  file_name = File.basename("db/memos_#{@id}.json")
-  @memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  # file_name = File.basename("db/memos_#{@id}.json")
+  file_name
+  # @memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  @memo = memo_from_file_name(file_name)
   erb :show
 end
 
 # 各メモを変更を編集する画面表示
 get '/memos/:id/edit' do
   @id = params[:id]
-  file_name = File.basename("db/memos_#{@id}.json")
-  @memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  # file_name = File.basename("db/memos_#{@id}.json")
+  file_name
+  # @memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  @memo = memo_from_file_name(file_name)
   erb :edit
 end
 
 # 各メモ変更
 patch '/memos/:id' do
   @id = params[:id]
-  file_name = File.basename("db/memos_#{@id}.json")
-  memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  # file_name = File.basename("db/memos_#{@id}.json")
+  file_name
+  # memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  memo = @memo = memo_from_file_name(file_name)
   memo = {
     "id" => memo[:id],
     "title" => CGI.escapeHTML(params[:title]),
@@ -64,8 +85,10 @@ patch '/memos/:id' do
     JSON.dump(memo, file)
   end
 
-  file_name = File.basename("db/memos_#{@id}.json")
-  memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  # file_name = File.basename("db/memos_#{@id}.json")
+  file_name
+  # memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+  memo = memo_from_file_name(file_name)
   # 成功したら、詳細表示画面へ
   redirect("/memos/#{@id}")
 end
