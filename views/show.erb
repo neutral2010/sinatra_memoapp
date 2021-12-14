@@ -1,8 +1,8 @@
 <h1>My favorite</h1>
 <h2>Favorite</h2>
-<p><%= @memo[:title] %></p>
+<p><%= h(@memo[:title]) %></p>
 <h2>Description</h2>
-<p><%= @memo[:content] %></p>
+<p><%= h(@memo[:content]) %></p>
 <div><a href="/"><input type="submit" value="一覧へ"></a></div>
 <div><a href="/memos/<%= @memo[:id] %>/edit"><input type="submit" value="編集"></a></div>
 <form action="/memos/<%= @memo[:id] %>" method="post">

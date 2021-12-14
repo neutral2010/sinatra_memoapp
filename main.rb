@@ -1,102 +1,91 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
 require 'json'
-require "cgi"
 
 helpers do
-  def file_name
-    File.basename("db/memos_#{@id}.json")
-    # File.basename("db/memos_params[:id].json")
+  def h(text)
+    Rack::Utils.escape_html(text)
   end
 
-  def memo_from_file_name(file_name)
+  def read_file_name_in_string
+    File.basename("db/memos_#{@id}.json")
+  end
+
+  def parse_json(file_name)
     JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
   end
 end
 
 not_found do
-  'ファイルが存在しません'
+  erb :error
 end
 
-# トップページ一覧表示
 get '/' do
   all_files = Dir.glob('db/*.json')
-  # @memosは、ハッシュ(jsonファイルがハッシュ化されたもの）が要素の配列
-  @memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true) }
+  memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true) }
+  @memos = memos.sort do |a, b|
+    b[:created_at] <=> a[:created_at]
+  end
   erb :index
 end
 
-# 新規メモ作成ページの表示
 get '/memos/new' do
   erb :new
 end
 
-# 新規メモ作成
 post '/memos/:id' do
   memo = {
-    "id" => SecureRandom.uuid,
-    "title" => CGI.escapeHTML(params["title"]),
-    "content" => CGI.escapeHTML(params["content"]),
-    "created_at" => Time.now
+    'id' => SecureRandom.uuid,
+    'title' => params['title'],
+    'content' => params['content'],
+    'created_at' => Time.now
   }
-  File.open("./db/memos_#{memo["id"]}.json", 'w') do |file|
+  File.open("./db/memos_#{memo['id']}.json", 'w') do |file|
     JSON.dump(memo, file)
   end
-  # 成功したら、トップページ（一覧表示画面へ）
   redirect '/'
 end
 
-# 各メモ詳細表示
 get '/memos/:id' do
   @id = params[:id]
-  # file_name = File.basename("db/memos_#{@id}.json")
-  file_name
-  # @memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
-  @memo = memo_from_file_name(file_name)
+  read_file_name_in_string
+  @memo = parse_json(file_name)
   erb :show
 end
 
-# 各メモを変更を編集する画面表示
 get '/memos/:id/edit' do
   @id = params[:id]
-  # file_name = File.basename("db/memos_#{@id}.json")
-  file_name
-  # @memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
-  @memo = memo_from_file_name(file_name)
+  read_file_name_in_string
+  @memo = parse_json(file_name)
   erb :edit
 end
 
-# 各メモ変更
 patch '/memos/:id' do
   @id = params[:id]
-  # file_name = File.basename("db/memos_#{@id}.json")
-  file_name
-  # memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
-  memo = @memo = memo_from_file_name(file_name)
+  read_file_name_in_string
+  memo = parse_json(file_name)
   memo = {
-    "id" => memo[:id],
-    "title" => CGI.escapeHTML(params[:title]),
-    "content" => CGI.escapeHTML(params[:content]),
-    "created_at" => Time.now
+    'id' => memo[:id],
+    'title' => params[:title],
+    # "content" => CGI.escapeHTML(params[:content]),
+    'content' => params[:content],
+    'created_at' => Time.now
   }
 
   File.open("./db/#{file_name}", 'w') do |file|
     JSON.dump(memo, file)
   end
 
-  # file_name = File.basename("db/memos_#{@id}.json")
-  file_name
-  # memo = JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
-  memo = memo_from_file_name(file_name)
-  # 成功したら、詳細表示画面へ
+  read_file_name_in_string
+  @memo = parse_json(file_name)
   redirect("/memos/#{@id}")
 end
 
-# 各メモ削除 ← 削除ボタンから来るところ
 delete '/memos/:id' do
   @id = params[:id]
   File.delete("./db/memos_#{@id}.json")
-  # 成功したら、トップページ（一覧表示画面へ）
   redirect '/'
 end
