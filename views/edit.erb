@@ -1,11 +1,11 @@
-<p>Hello edit</p>
+<h1>Edit</h1>
 <form action="/memos/<%= @memo[:id] %>" method="post">
   <input type="hidden" name="_method" value="PATCH" />
-  <div>Favorite</div>
-  <div><input type="text" value= "<%= @memo[:title] %>" name="title" id="title"></div>
-  <div>Description</div>
-  <div><textarea name="content" id="content"><%= @memo[:content] %></textarea></div>
+  <h2>Favorite</h2>
+  <input type="text" value= "<%= h(@memo[:title]) %>" name="title" id="title">
+  <h2></h2>
+  <h2>Description</h2>
+  <textarea name="content" id="content"><%= h(@memo[:content]) %></textarea>
   <div><input type="submit" value="変更"></div>
-  <div><a href="/memos/<%= @memo[:id] %>">戻る</a></div>
-<!--  <div><a href="/">戻る<%#= @memo[:id] %></a></div>-->
+  <a href="/memos/<%= @memo[:id] %>">戻る</a>
 </form>
