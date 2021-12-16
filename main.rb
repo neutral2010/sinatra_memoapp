@@ -71,7 +71,6 @@ patch '/memos/:id' do
   memo = {
     'id' => memo[:id],
     'title' => params[:title],
-    # "content" => CGI.escapeHTML(params[:content]),
     'content' => params[:content],
     'created_at' => Time.now
   }
