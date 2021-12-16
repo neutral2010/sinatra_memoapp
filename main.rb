@@ -5,6 +5,11 @@ require 'sinatra/reloader'
 require 'erb'
 require 'json'
 
+not_found do
+  'ファイルが存在しません'
+  erb :error
+end
+
 helpers do
   def h(text)
     Rack::Utils.escape_html(text)
@@ -17,10 +22,6 @@ helpers do
   def parse_json(file_name)
     JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
   end
-end
-
-not_found do
-  erb :error
 end
 
 get '/' do
@@ -51,21 +52,21 @@ end
 
 get '/memos/:id' do
   @id = params[:id]
-  read_file_name_in_string
+  file_name = read_file_name_in_string
   @memo = parse_json(file_name)
   erb :show
 end
 
 get '/memos/:id/edit' do
   @id = params[:id]
-  read_file_name_in_string
+  file_name = read_file_name_in_string
   @memo = parse_json(file_name)
   erb :edit
 end
 
 patch '/memos/:id' do
   @id = params[:id]
-  read_file_name_in_string
+  file_name = read_file_name_in_string
   memo = parse_json(file_name)
   memo = {
     'id' => memo[:id],
@@ -79,7 +80,7 @@ patch '/memos/:id' do
     JSON.dump(memo, file)
   end
 
-  read_file_name_in_string
+  file_name = read_file_name_in_string
   @memo = parse_json(file_name)
   redirect("/memos/#{@id}")
 end

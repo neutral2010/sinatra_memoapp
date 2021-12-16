@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+body {
+    background-color: #eeeeee;
+    font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial', 'Hiragino Sans', 'ヒラギノ角ゴシック', YuGothic, 'Yu Gothic', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic';
+    color: #424242;
+}
+
+header {
+    border-bottom: #595757 1px dotted;
+}
+
+.container {
+    width: 600px;
+    margin: auto;
+    padding-top: 0;
+}
+
+h2 {
+    font-size: 25px;
+    color: #00897b;
+    border-bottom: dashed 2px #4db6ac;
+    padding-left: 8px;
+}
+
+h3 {
+    width: 100px;
+    color: #616161;
+    border-bottom: dotted 1px;
+    font-size: 16px;
+}
+
+input[type="text"] {
+    width: 95%;
+    height: 2em;
+    background-color: #eeeeee;
+    border: none;
+    border-bottom: solid 1px #546e7a;
+    border-left: solid 3px #546e7a;
+    padding-right: 20px;
+    outline-style: none;
+}
+
+input[type="text" ]:hover {
+    border-bottom: solid 3px maroon;
+}
+
+#title, #content {;
+    padding-left: 10px;
+    padding-bottom: 5px;
+}
+
+input[type="submit"],
+.btn {
+    font-family: 'Courier New', monospace;
+    color: #424242;
+    font-weight: bold;
+    background-color: #ddd;
+    width: 80px;
+    height: 40px;
+    line-height: 45px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+input[type="submit"] {
+    color: darkgoldenrod;
+}
+
+a {
+    text-decoration: none;
+    color: #00897b;;
+}
+
+li {
+    list-style: none;
+}
+
+li a {
+    color: #424242;
+}
+
+li a:hover {
+    color: maroon;
+}
+
+footer {
+    font-size: 12px;
+    border-top: dotted 1px #005555;
+    height: 30px;
+    width: 600px;
+    margin: auto;
+    text-align: right;
+    margin-top: 30px;
+}
