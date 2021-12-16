@@ -9,6 +9,7 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
 
 
 ## 使うための環境
+- Bundler version 2.2.3
 - Ruby version 3.0.0
 - DBをインストールする必要はありません。
 
@@ -19,7 +20,7 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
  $ git clone https://github.com/neutral2010/sinatra_memoapp.git
    
 ```
-2. Bundlerがなかったら( `$ bundle -v` で確認できる。）、<br>
+2. Bundlerがなかったら( `$ bundle -v` で確認できる。）<br>
 ```
    
  $ gem install bundler
@@ -31,13 +32,19 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
  $ bundle install
  
 ```
-4. 該当のディレクトリに移動して
+4. 該当のディレクトリに移動して、次のコマンドでサーバーが起動。
 ```
 
  $ bundle exec ruby main.rb
  
 ```
-5. サーバーが起動して、ブラウザにアプリが表示されます。各機能を試せます。
+5. ブラウザで
+```
+
+ $ localhost//4567
+ 
+```
+6. アプリが表示され、各機能が使えます。
 
 ##  その他
-あらかじめ、サンプルデータを３つ入れてあります。
+あらかじめ、サンプルデータが３つ入っています。

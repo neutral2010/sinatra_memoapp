@@ -1,11 +1,10 @@
-<h1>My favorite</h1>
-<h2>Favorite</h2>
+<h3>Favorite</h3>
 <p><%= h(@memo[:title]) %></p>
-<h2>Description</h2>
+<h3>Description</h3>
 <p><%= h(@memo[:content]) %></p>
-<div><a href="/"><input type="submit" value="一覧へ"></a></div>
-<div><a href="/memos/<%= @memo[:id] %>/edit"><input type="submit" value="編集"></a></div>
+<div><a href="/memos/<%= @memo[:id] %>/edit"><input type="submit" value="edit"></a></div>
 <form action="/memos/<%= @memo[:id] %>" method="post">
   <input type="hidden" name="_method" value="DELETE">
-  <input type="submit" value="削除">
+  <input type="submit" value="delete">
 </form>
+<div class="btn"><a href="/">to All</a></div>

@@ -1,7 +1,7 @@
-<h1> My favorites</h1>
+<h2>All</h2>
 <% @memos.each do |memo| %>
   <ul>
     <li><a href="/memos/<%= memo[:id] %>"><%= h(memo[:title]) %></a></li>
   </ul>
 <% end %>
-<a href="/memos/new"><input type="submit" value="追加"></a>
+<a href="/memos/new"><input type="submit" value="add"></a>
