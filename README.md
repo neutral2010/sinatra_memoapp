@@ -5,6 +5,9 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
 
 新規追加・編集・削除機能があります。また登録したお気に入りを、ひとつずつ見るページもあります。
 
+[![Image from Gyazo](https://i.gyazo.com/b4d554790879730afb36592dba739ce8.gif)](https://gyazo.com/b4d554790879730afb36592dba739ce8)
+
+
 ## 使うための環境
 - Ruby version 3.0.0
 - DBをインストールする必要はありません。
