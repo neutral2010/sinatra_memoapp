@@ -35,14 +35,14 @@ input[type="text"] {
     height: 2em;
     background-color: #eeeeee;
     border: none;
-    border-bottom: solid 1px #546e7a;
+    border-bottom: solid 1px #78909c;
     border-left: solid 3px #546e7a;
     padding-right: 20px;
     outline-style: none;
 }
 
 input[type="text" ]:hover {
-    border-bottom: solid 3px maroon;
+    border-bottom: dotted 3px #f9a825;
 }
 
 #title, #content {;

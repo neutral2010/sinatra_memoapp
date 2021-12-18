@@ -6,7 +6,6 @@ require 'erb'
 require 'json'
 
 not_found do
-  'ファイルが存在しません'
   erb :error
 end
 
