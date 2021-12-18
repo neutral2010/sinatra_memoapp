@@ -5,7 +5,7 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
 
 新規追加・編集・削除機能があります。また登録したお気に入りを、ひとつずつ見るページもあります。
 
-[![Image from Gyazo](https://i.gyazo.com/b4d554790879730afb36592dba739ce8.gif)](https://gyazo.com/b4d554790879730afb36592dba739ce8)
+[![Image from Gyazo](https://i.gyazo.com/e1824b07814f7de857e3c404202fb07e.gif)](https://gyazo.com/e1824b07814f7de857e3c404202fb07e)
 
 
 ## 使うための環境
@@ -15,34 +15,24 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
 
 ## ブラウザに表示させるまでの手順
 1. 自分の手元の環境にソースコードをコピーする。<br>
-```
-   
- $ git clone https://github.com/neutral2010/sinatra_memoapp.git
-   
+```  
+ $ git clone https://github.com/neutral2010/sinatra_memoapp.git  
 ```
 2. Bundlerがなかったら( `$ bundle -v` で確認できる。）<br>
-```
-   
+```  
  $ gem install bundler
-
 ```
 3. Gemfileを有効にするために
 ```
- 
- $ bundle install
- 
+ $ bundle install 
 ```
 4. 該当のディレクトリに移動して、次のコマンドでサーバーが起動。
 ```
-
- $ bundle exec ruby main.rb
- 
+ $ bundle exec ruby main.rb 
 ```
 5. ブラウザで
 ```
-
- $ localhost//4567
- 
+ $ localhost//4567 
 ```
 6. アプリが表示され、各機能が使えます。
 
