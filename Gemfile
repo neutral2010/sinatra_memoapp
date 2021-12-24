@@ -10,4 +10,5 @@ gem 'webrick'
 
 group :development do
   gem 'rubocop-fjord', require: false
+  gem "debug"
 end
