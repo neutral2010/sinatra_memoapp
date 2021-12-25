@@ -1,10 +1,13 @@
+<h2 class="content_title">Details</h2>
 <h3 class="headline">Favorite</h3>
 <p><%= h(@memo[:title]) %></p>
 <h3 class="headline">Description</h3>
 <p><%= h(@memo[:content]) %></p>
-<div><a href="/memos/<%= @memo[:id] %>/edit"><input type="submit" value="Edit"></a></div>
+<a href="/memos/<%= @memo[:id] %>/edit" class="btn" id="edit">Edit</a>
 <form action="/memos/<%= @memo[:id] %>" method="post">
-  <input type="hidden" name="_method" value="DELETE">
-  <input type="submit" value="Delete">
+  <input type="hidden" name="_method" value="DELETE" class="btn">
+  <div class="form-action">
+   <input type="submit" value="Delete">
+  </div>
 </form>
-<div class="btn"><a href="/">to All</a></div>
+<a href="/" class="btn">to All</a>

@@ -2,9 +2,15 @@
 <form action="/memos/<%= @memo[:id] %>" method="post">
   <input type="hidden" name="_method" value="PATCH"/>
   <h3 class="headline">Favorite</h3>
-  <div class="form_input"><input type="text" value="<%= h(@memo[:title]) %>" name="title" id="title"></div>
+  <div class="form_input">
+    <input type="text" value="<%= h(@memo[:title]) %>" name="title" id="title">
+  </div>
   <h3 class="headline">Description</h3>
-  <div class="form_input"><input type="text" value="<%= h(@memo[:content]) %>" name="content" id="content"></div>
-  <input type="submit" value="Edit">
+  <div class="form_input">
+    <input type="text" value="<%= h(@memo[:content]) %>" name="content" id="content">
+  </div>
+  <div class="form-action">
+    <input type="submit" value="Save">
+  </div>
 </form>
-<div class="btn"><a href="/memos/<%= @memo[:id] %>">Return</a></div>
+<a href="/memos/<%= @memo[:id] %>" class="btn">Return</a>
