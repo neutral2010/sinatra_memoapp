@@ -1,7 +1,7 @@
-<h2>All</h2>
-<% @memos.each do |memo| %>
-  <ul>
-    <li><a href="/memos/<%= memo[:id] %>"><%= h(memo[:title]) %></a></li>
+<h2 class="content_title">All</h2>
+  <ul >
+    <% @memos.each do |memo| %>
+    <li class="item"><a href="/memos/<%= memo[:id] %>"><%= h(memo[:title]) %></a></li>
+    <% end %>
   </ul>
-<% end %>
-<a href="/memos/new"><input type="submit" value="add"></a>
+<a href="/memos/new"><input type="submit" value="Add"></a>

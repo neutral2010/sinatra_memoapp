@@ -52,7 +52,6 @@ get '/memos/:id' do
   @id = params[:id]
   file_name = read_file_name(@id)
   @memo = parse_json(file_name)
-  # p file_name
   erb :show
 end
 

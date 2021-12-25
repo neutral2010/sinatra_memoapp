@@ -6,7 +6,7 @@ body {
     color: #424242;
 }
 
-header {
+.header_title {
     border-bottom: #595757 1px dotted;
 }
 
@@ -16,14 +16,14 @@ header {
     padding-top: 0;
 }
 
-h2 {
+.content_title {
     font-size: 25px;
     color: #00897b;
     border-bottom: dashed 2px #4db6ac;
     padding-left: 8px;
 }
 
-h3 {
+.headline {
     width: 100px;
     color: #616161;
     border-bottom: dotted 1px;
@@ -74,19 +74,20 @@ a {
     color: #00897b;;
 }
 
-li {
+.item {
+    margin-top: 15px;
     list-style: none;
 }
 
-li a {
+.item a {
     color: #424242;
 }
 
-li a:hover {
+.item a:hover {
     color: darkgoldenrod;
 }
 
-footer {
+.footer {
     font-size: 12px;
     border-top: dotted 1px #005555;
     height: 30px;
