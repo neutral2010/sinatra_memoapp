@@ -9,6 +9,6 @@ gem 'sinatra-contrib'
 gem 'webrick'
 
 group :development do
-  gem 'rubocop-fjord', require: false
   gem 'debug'
+  gem 'rubocop-fjord', require: false
 end
