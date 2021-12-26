@@ -4,7 +4,6 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
 require 'json'
-# require 'debug'
 
 not_found do
   erb :error
@@ -37,10 +36,10 @@ end
 
 post '/memos/:id' do
   memo = {
-    :id => SecureRandom.uuid,
-    :title => params['title'],
-    :content => params['content'],
-    :created_at => Time.now
+    id: SecureRandom.uuid,
+    title: params['title'],
+    content: params['content'],
+    created_at: Time.now
   }
   File.open("./db/memos_#{memo[:id]}.json", 'w') do |file|
     JSON.dump(memo, file)
@@ -49,6 +48,7 @@ post '/memos/:id' do
 end
 
 get '/memos/:id' do
+  binding.break
   @id = params[:id]
   file_name = read_file_name(@id)
   @memo = parse_json(file_name)
@@ -56,6 +56,7 @@ get '/memos/:id' do
 end
 
 get '/memos/:id/edit' do
+  binding.break
   @id = params[:id]
   file_name = read_file_name(@id)
   @memo = parse_json(file_name)
