@@ -4,6 +4,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
 require 'json'
+require "debug"
 
 not_found do
   erb :error
@@ -48,7 +49,6 @@ post '/memos/:id' do
 end
 
 get '/memos/:id' do
-  binding.break
   @id = params[:id]
   file_name = read_file_name(@id)
   @memo = parse_json(file_name)

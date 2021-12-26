@@ -1,5 +1,0 @@
-inherit_from: 'config/rubocop.yml'
-
-inherit_gem:
-  rubocop-fjord:
-    - "config/rubocop.yml"
