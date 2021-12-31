@@ -14,14 +14,6 @@ helpers do
   def h(text)
     Rack::Utils.escape_html(text)
   end
-
-  # def read_file_name(id)
-  #   File.basename("db/memos_#{id}.json")
-  # end
-
-  def parse_json(file_name)
-    JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
-  end
 end
 
 module DB
@@ -33,29 +25,39 @@ module DB
     end
 
     def find(id)
-      JSON.parse(File.read("db/memos_#{id}.json"), symbolize_names: true)
+      file_name = read_path(id)
+      parse_json(file_name)
     end
 
     def create(memo)
-      File.open("./db/memos_#{memo[:id]}.json", 'w') do |file|
-        JSON.dump(memo, file)
-      end
+      dump_json(memo)
     end
 
     def update(memo)
-      File.open("./db/memos_#{memo[:id]}.json", 'w') do |file|
-        JSON.dump(memo, file)
-      end
-      JSON.parse(File.read("./db/memos_#{memo[:id]}.json"), symbolize_names: true)
+      dump_json(memo)
     end
 
     def delete(id)
-      File.delete("./db/memos_#{id}.json")
+      file_name = read_path(id)
+      File.delete("./db/#{file_name}")
     end
 
     private
 
-    def read_path; end
+    def dump_json(memo)
+      File.open("./db/memos_#{memo[:id]}.json", 'w') do |file|
+        JSON.dump(memo, file)
+      end
+    end
+
+    # この処理は必要なのか疑問
+    def read_path(id)
+      File.basename("db/memos_#{id}.json")
+    end
+
+    def parse_json(file_name)
+      JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+    end
   end
 end
 
