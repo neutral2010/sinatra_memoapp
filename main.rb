@@ -40,7 +40,6 @@ module DB
 
     def delete(id)
       raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
-
       file_name = read_path(id)
       File.delete("./db/#{file_name}")
     end
