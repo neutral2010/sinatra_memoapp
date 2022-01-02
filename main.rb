@@ -4,7 +4,6 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
 require 'json'
-# require 'debug'
 
 not_found do
   erb :error
@@ -16,6 +15,7 @@ helpers do
   end
 end
 
+# CRUD function and path for memo
 module DB
   class << self
     def all
@@ -25,6 +25,7 @@ module DB
     end
 
     def find(id)
+      raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
       file_name = read_path(id)
       parse_json(file_name)
     end
@@ -38,6 +39,8 @@ module DB
     end
 
     def delete(id)
+      raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
+
       file_name = read_path(id)
       File.delete("./db/#{file_name}")
     end
@@ -50,7 +53,6 @@ module DB
       end
     end
 
-    # この処理は必要なのか疑問
     def read_path(id)
       File.basename("db/memos_#{id}.json")
     end
@@ -73,8 +75,8 @@ end
 post '/memos/:id' do
   memo = {
     id: SecureRandom.uuid,
-    title: params['title'],
-    content: params['content'],
+    title: params[:title],
+    content: params[:content],
     created_at: Time.now
   }
   DB.create(memo)
