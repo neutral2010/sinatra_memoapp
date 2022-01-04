@@ -25,39 +25,33 @@ module DB
     end
 
     def find(id)
-      raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
-      file_name = read_path(id)
-      parse_json(file_name)
+      assert_id_format(id)
+      parse_json(id)
     end
 
-    def create(memo)
-      dump_json(memo)
-    end
-
-    def update(memo)
+    def save(memo)
       dump_json(memo)
     end
 
     def delete(id)
-      raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
-      file_name = read_path(id)
-      File.delete("./db/#{file_name}")
+      assert_id_format(id)
+      File.delete("./db/#{id}.json")
     end
 
     private
 
+    def assert_id_format(id)
+      raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
+    end
+
     def dump_json(memo)
-      File.open("./db/memos_#{memo[:id]}.json", 'w') do |file|
+      File.open("./db/#{memo[:id]}.json", 'w') do |file|
         JSON.dump(memo, file)
       end
     end
 
-    def read_path(id)
-      File.basename("db/memos_#{id}.json")
-    end
-
-    def parse_json(file_name)
-      JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+    def parse_json(id)
+      JSON.parse(File.read("./db/#{id}.json"), symbolize_names: true)
     end
   end
 end
@@ -78,7 +72,7 @@ post '/memos/:id' do
     content: params[:content],
     created_at: Time.now
   }
-  DB.create(memo)
+  DB.save(memo)
   redirect '/'
 end
 
@@ -100,7 +94,7 @@ patch '/memos/:id' do
   memo[:title] = params[:title]
   memo[:content] = params[:content]
   memo[:created_at] = Time.now
-  DB.update(memo)
+  DB.save(memo)
   redirect("/memos/#{id}")
 end
 
