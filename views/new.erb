@@ -1,9 +1,15 @@
-<h2>Introduce your favorite</h2>
+<h2 class="content_title">Introduce your favorite</h2>
 <form action="/memos/:id" method="post">
-  <h3>Favorite</h3>
-  <div class="form_input"><input type="text" name="title" id="title"></div>
-  <h3>Description</h3>
-  <div class="form_input"><input type="text" name="content" id="content"></div>
-  <input type="submit" value="save">
+  <h3 class="headline">Favorite</h3>
+  <div class="form_input">
+    <input type="text" name="title" id="title">
+  </div>
+  <h3 class="headline">Description</h3>
+  <div class="form_input">
+    <input type="text" name="content" id="content">
+  </div>
+  <div class="form-action">
+    <input type="submit" value="Save">
+  </div>
 </form>
-<div class="btn"><a href="/">to All</a></div>
+<a href="/" class="btn">to All</a>

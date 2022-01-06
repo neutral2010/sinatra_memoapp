@@ -7,7 +7,6 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
 
 [![Image from Gyazo](https://i.gyazo.com/e1824b07814f7de857e3c404202fb07e.gif)](https://gyazo.com/e1824b07814f7de857e3c404202fb07e)
 
-
 ## 使うための環境
 - Bundler version 2.2.3
 - Ruby version 3.0.0
@@ -32,9 +31,7 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
 ```
 5. ブラウザで
 ```
- $ localhost//4567 
+ localhost:4567 
 ```
 6. アプリが表示され、各機能が使えます。
 
-##  その他
-あらかじめ、サンプルデータが３つ入っています。

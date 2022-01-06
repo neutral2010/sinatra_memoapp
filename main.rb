@@ -13,22 +13,51 @@ helpers do
   def h(text)
     Rack::Utils.escape_html(text)
   end
+end
 
-  def read_file_name_in_string
-    File.basename("db/memos_#{@id}.json")
-  end
+# CRUD function and path for memo
+module DB
+  class << self
+    def all
+      all_files = Dir.glob('db/*.json')
+      memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true) }
+      memos.sort_by { |v| v[:created_at] }
+    end
 
-  def parse_json(file_name)
-    JSON.parse(File.read("./db/#{file_name}"), symbolize_names: true)
+    def find(id)
+      assert_id_format(id)
+      parse_json(id)
+    end
+
+    def save(memo)
+      dump_json(memo)
+    end
+
+    def delete(id)
+      assert_id_format(id)
+      File.delete("./db/#{id}.json")
+    end
+
+    private
+
+    def assert_id_format(id)
+      raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
+    end
+
+    def dump_json(memo)
+      File.open("./db/#{memo[:id]}.json", 'w') do |file|
+        JSON.dump(memo, file)
+      end
+    end
+
+    def parse_json(id)
+      JSON.parse(File.read("./db/#{id}.json"), symbolize_names: true)
+    end
   end
 end
 
 get '/' do
-  all_files = Dir.glob('db/*.json')
-  memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true) }
-  @memos = memos.sort do |a, b|
-    b[:created_at] <=> a[:created_at]
-  end
+  @memos = DB.all
   erb :index
 end
 
@@ -38,53 +67,39 @@ end
 
 post '/memos/:id' do
   memo = {
-    'id' => SecureRandom.uuid,
-    'title' => params['title'],
-    'content' => params['content'],
-    'created_at' => Time.now
+    id: SecureRandom.uuid,
+    title: params[:title],
+    content: params[:content],
+    created_at: Time.now
   }
-  File.open("./db/memos_#{memo['id']}.json", 'w') do |file|
-    JSON.dump(memo, file)
-  end
+  DB.save(memo)
   redirect '/'
 end
 
 get '/memos/:id' do
-  @id = params[:id]
-  file_name = read_file_name_in_string
-  @memo = parse_json(file_name)
+  id = params[:id]
+  @memo = DB.find(id)
   erb :show
 end
 
 get '/memos/:id/edit' do
-  @id = params[:id]
-  file_name = read_file_name_in_string
-  @memo = parse_json(file_name)
+  id = params[:id]
+  @memo = DB.find(id)
   erb :edit
 end
 
 patch '/memos/:id' do
-  @id = params[:id]
-  file_name = read_file_name_in_string
-  memo = parse_json(file_name)
-  memo = {
-    'id' => memo[:id],
-    'title' => params[:title],
-    'content' => params[:content],
-    'created_at' => Time.now
-  }
-
-  File.open("./db/#{file_name}", 'w') do |file|
-    JSON.dump(memo, file)
-  end
-
-  file_name = read_file_name_in_string
-  @memo = parse_json(file_name)
-  redirect("/memos/#{@id}")
+  id = params[:id]
+  memo = DB.find(id)
+  memo[:title] = params[:title]
+  memo[:content] = params[:content]
+  memo[:created_at] = Time.now
+  DB.save(memo)
+  redirect("/memos/#{id}")
 end
 
 delete '/memos/:id' do
-  @id = params[:id]
-  File.delete("./db/memos_#{@id}.json")
+  id = params[:id]
+  DB.delete(id)
   redirect '/'
 end

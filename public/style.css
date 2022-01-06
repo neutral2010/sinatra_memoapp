@@ -6,7 +6,7 @@ body {
     color: #424242;
 }
 
-header {
+.header_title {
     border-bottom: #595757 1px dotted;
 }
 
@@ -16,21 +16,21 @@ header {
     padding-top: 0;
 }
 
-h2 {
+.content_title {
     font-size: 25px;
     color: #00897b;
     border-bottom: dashed 2px #4db6ac;
     padding-left: 8px;
 }
 
-h3 {
+.headline {
     width: 100px;
     color: #616161;
     border-bottom: dotted 1px;
     font-size: 16px;
 }
 
-input[type="text"] {
+.form_input input[type="text"] {
     width: 95%;
     height: 2em;
     background-color: #eeeeee;
@@ -41,7 +41,7 @@ input[type="text"] {
     outline-style: none;
 }
 
-input[type="text" ]:hover {
+.form_input input[type="text" ]:hover {
     border-bottom: dotted 3px #f9a825;
 }
 
@@ -50,43 +50,56 @@ input[type="text" ]:hover {
     padding-bottom: 5px;
 }
 
-input[type="submit"],
+.form-action input[type="submit"],
 .btn {
     font-family: 'Courier New', monospace;
     color: #424242;
     font-weight: bold;
+    font-size: 15px;
     background-color: #ddd;
-    width: 80px;
-    height: 40px;
-    line-height: 45px;
+    width: 90px;
+    height: 34px;
     text-align: center;
+    line-height: 36px;
     cursor: pointer;
+    border: solid 1px;
+    border-color: #ddd;
     border-radius: 15px;
-    margin-top: 10px;
+    margin-top: 8px;
+    display: inline-block;
 }
 
-input[type="submit"] {
+.btn {
+    color: #424242;
+}
+
+.btn:hover {
+    color: #00897b;
+}
+
+.form-action input[type="submit"],
+#edit {
     color: darkgoldenrod;
 }
 
 a {
     text-decoration: none;
-    color: #00897b;;
 }
 
-li {
+.item {
+    margin-top: 15px;
     list-style: none;
 }
 
-li a {
+.item a {
     color: #424242;
 }
 
-li a:hover {
+.item a:hover {
     color: darkgoldenrod;
 }
 
-footer {
+.footer {
     font-size: 12px;
     border-top: dotted 1px #005555;
     height: 30px;
