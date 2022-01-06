@@ -30,6 +30,7 @@ module DB
     end
 
     def save(memo)
+      assert_id_format(memo[:id])
       dump_json(memo)
     end
 
