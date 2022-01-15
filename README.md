@@ -10,7 +10,17 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
 ## 使うための環境
 - Bundler version 2.2.3
 - Ruby version 3.0.0
-- DBをインストールする必要はありません。
+- postgres (PostgreSQL) 14.0
+
+### データベース用のテーブル作成
+任意のデータベース（ここでは`sinatra`)で、以下のコマンドを実行してください。
+```
+sinatra=# CREATE TABLE memo
+(id  SERIAL    NOT NULL,
+title  TEXT    NOT NULL,
+content  TEXT    ,
+PRIMARY KEY (id));
+```
 
 ## ブラウザに表示させるまでの手順
 1. 自分の手元の環境にソースコードをコピーする。<br>
@@ -34,4 +44,3 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
  localhost:4567 
 ```
 6. アプリが表示され、各機能が使えます。
-

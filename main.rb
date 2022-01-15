@@ -24,20 +24,16 @@ module DB
   class << self
     def all
       result = CONN.exec('select* from memo')
-      memos = []
-      result.each do |row|
-        memos << row
-      end
-      memos.each_index do |i|
-        memos[i]['id'] = memos[i]['id'].to_i
-      end
+      memos = make_memos_array(result)
+      memos.each { |memo| memo['id'] = memo['id'].to_i }
       memos.sort_by { |v| v['id'].to_i }
     end
 
     def find(id)
       assert_id_format(id)
       result = CONN.exec('select* from memo where id = $1', [id])
-      get_selected_memo(result)
+      memos = make_memos_array(result)
+      @memo = memos[0]
     end
 
     def create(title, content)
@@ -62,11 +58,18 @@ module DB
     end
 
     def get_selected_memo(result)
-      memo = []
+      memos = []
       result.each do |row|
-        memo << row
+        memos << row
       end
-      @memo = memo[0]
+      @memo = memos[0]
+    end
+
+    def make_memos_array(result)
+      memos = []
+      result.each do |row|
+        memos << row
+      end
     end
   end
 end
