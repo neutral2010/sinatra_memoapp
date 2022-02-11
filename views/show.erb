@@ -3,9 +3,7 @@
 <p><%= h(@memo['title']) %></p>
 <h3 class="headline">Description</h3>
 <p><%= h(@memo['content']) %></p>
-<!--<a href="/memos/<%#= @memo['id'] %>/edit" class="btn" id="edit">Edit</a>-->
-<a href="/memos/<%= params[:id] %>/edit" class="btn" id="edit">Edit</a>
-
+<a href="/memos/<%= @memo['id'] %>/edit" class="btn" id="edit">Edit</a>
 <form action="/memos/<%= @memo['id'] %>" method="post">
   <input type="hidden" name="_method" value="DELETE" class="btn">
   <div class="form-action">

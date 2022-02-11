@@ -24,7 +24,7 @@ module Memo_of_sinatra_db
 
   class << self
     def all
-      result = CONN.exec('SELECT * FROM memo ORDER BY id ASC;')
+      CONN.exec('SELECT * FROM memo ORDER BY id ASC;')
     end
 
     def find(id)
