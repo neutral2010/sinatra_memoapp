@@ -85,8 +85,6 @@ post '/memos/:id' do
   title = params[:title]
   content = params[:content]
   Memo_of_sinatra_db.create(title, content)
-  # id = params[:id]
-  # binding.break
   redirect '/'
 end
 

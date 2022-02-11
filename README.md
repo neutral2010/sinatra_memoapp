@@ -12,16 +12,14 @@ Sinatraで作成したシンプルなWebアプリです。自分のお気に入�
 - Ruby version 3.0.0
 - postgres (PostgreSQL) 14.0
 
-### データベース用のテーブル作成
-任意のデータベース（ここでは`sinatra`)で、以下のコマンドを実行してください。
+### データベース用のテーブル作成用ファイル
 ```
-sinatra=# CREATE TABLE memo
-(id  SERIAL    NOT NULL,
-title  TEXT    NOT NULL,
-content  TEXT    ,
-PRIMARY KEY (id));
+schema.sql
 ```
-
+以下のコマンドで、実行できます。
+```
+$ psql sinatra < schema.sql
+```
 ## ブラウザに表示させるまでの手順
 1. 自分の手元の環境にソースコードをコピーする。<br>
 ```  
