@@ -38,7 +38,7 @@ module Memo_of_sinatra_db
       CONN.exec('INSERT INTO memo (title, content) VALUES ($1, $2)', [title, content])
     end
 
-    def update(title, content, id)
+    def update(id, title, content)
       assert_id_format(id)
       result = CONN.exec('UPDATE memo SET title = $1, content = $2 WHERE id=$3', [title, content, id])
       get_selected_memo(result)
@@ -104,7 +104,7 @@ patch '/memos/:id' do
   title = params[:title]
   content = params[:content]
   id = params[:id]
-  Memo_of_sinatra_db.update(title, content, id)
+  Memo_of_sinatra_db.update(id, title, content)
   redirect("/memos/#{id}")
 end
 
