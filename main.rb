@@ -29,9 +29,8 @@ module Memo_of_sinatra_db
 
     def find(id)
       assert_id_format(id)
-      result = CONN.exec('SELECT * FROM memo WHERE id = $1', [id])
-      memos = make_memos_array(result)
-      @memo = memos[0]
+      result_of_find = CONN.exec('SELECT * FROM memo WHERE id = $1', [id])
+      make_for_show_memo(result_of_find)
     end
 
     def create(title, content)
@@ -40,8 +39,8 @@ module Memo_of_sinatra_db
 
     def update(id, title, content)
       assert_id_format(id)
-      result = CONN.exec('UPDATE memo SET title = $1, content = $2 WHERE id=$3', [title, content, id])
-      get_selected_memo(result)
+      result_of_update = CONN.exec('UPDATE memo SET title = $1, content = $2 WHERE id=$3', [title, content, id])
+      get_updated_memo(result_of_update)
     end
 
     def delete(id)
@@ -55,19 +54,20 @@ module Memo_of_sinatra_db
       raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
     end
 
-    def get_selected_memo(result)
+    def make_for_show_memo(result_of_find)
       memos = []
-      result.each do |row|
+      result_of_find.each do |row|
         memos << row
       end
       @memo = memos[0]
     end
 
-    def make_memos_array(result)
+    def get_updated_memo(result_of_update)
       memos = []
-      result.each do |row|
+      result_of_update.each do |row|
         memos << row
       end
+      @memo = memos[0]
     end
   end
 end
@@ -85,6 +85,8 @@ post '/memos/:id' do
   title = params[:title]
   content = params[:content]
   Memo_of_sinatra_db.create(title, content)
+  # id = params[:id]
+  # binding.break
   redirect '/'
 end
 
