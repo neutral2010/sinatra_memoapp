@@ -18,7 +18,7 @@ helpers do
 end
 
 # CRUD function and path for mem
-module Memo_of_sinatra_db
+module MemoOfSinatraDb
   CONN = PG.connect(dbname: 'sinatra')
   private_constant :CONN
 
@@ -73,7 +73,7 @@ module Memo_of_sinatra_db
 end
 
 get '/' do
-  @memos = Memo_of_sinatra_db.all
+  @memos = MemoOfSinatraDb.all
   erb :index
 end
 
@@ -84,19 +84,19 @@ end
 post '/memos/:id' do
   title = params[:title]
   content = params[:content]
-  Memo_of_sinatra_db.create(title, content)
+  MemoOfSinatraDb.create(title, content)
   redirect '/'
 end
 
 get '/memos/:id' do
   id = params[:id]
-  @memo = Memo_of_sinatra_db.find(id)
+  @memo = MemoOfSinatraDb.find(id)
   erb :show
 end
 
 get '/memos/:id/edit' do
   id = params[:id]
-  @memo = Memo_of_sinatra_db.find(id)
+  @memo = MemoOfSinatraDb.find(id)
   erb :edit
 end
 
@@ -104,12 +104,12 @@ patch '/memos/:id' do
   title = params[:title]
   content = params[:content]
   id = params[:id]
-  Memo_of_sinatra_db.update(id, title, content)
+  MemoOfSinatraDb.update(id, title, content)
   redirect("/memos/#{id}")
 end
 
 delete '/memos/:id' do
   id = params[:id]
-  Memo_of_sinatra_db.delete(id)
+  MemoOfSinatraDb.delete(id)
   redirect '/'
 end
