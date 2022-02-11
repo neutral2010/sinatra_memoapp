@@ -23,7 +23,7 @@ module DB
 
   class << self
     def all
-      result = CONN.exec('select* from memo')
+      result = CONN.exec('SELECT * FROM memo')
       memos = make_memos_array(result)
       memos.each { |memo| memo['id'] = memo['id'].to_i }
       memos.sort_by { |v| v['id'].to_i }
@@ -31,24 +31,24 @@ module DB
 
     def find(id)
       assert_id_format(id)
-      result = CONN.exec('select* from memo where id = $1', [id])
+      result = CONN.exec('SELECT * FROM memo WHERE id = $1', [id])
       memos = make_memos_array(result)
       @memo = memos[0]
     end
 
     def create(title, content)
-      CONN.exec('insert into memo (title, content) values ($1, $2)', [title, content])
+      CONN.exec('INSERT INTO memo (title, content) VALUES ($1, $2)', [title, content])
     end
 
     def update(title, content, id)
       assert_id_format(id)
-      result = CONN.exec('update memo set title = $1, content = $2 where id=$3', [title, content, id])
+      result = CONN.exec('UPDATE memo SET title = $1, content = $2 WHERE id=$3', [title, content, id])
       get_selected_memo(result)
     end
 
     def delete(id)
       assert_id_format(id)
-      CONN.exec('delete from memo where id = $1', [id])
+      CONN.exec('DELETE FROM memo WHERE id = $1', [id])
     end
 
     private
