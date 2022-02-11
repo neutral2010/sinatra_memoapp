@@ -24,10 +24,7 @@ module Memo_of_sinatra_db
 
   class << self
     def all
-      result = CONN.exec('SELECT * FROM memo')
-      memos = make_memos_array(result)
-      memos.each { |memo| memo['id'] = memo['id'].to_i }
-      memos.sort_by { |v| v['id'].to_i }
+      result = CONN.exec('SELECT * FROM memo ORDER BY id ASC;')
     end
 
     def find(id)
