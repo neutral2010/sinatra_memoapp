@@ -17,9 +17,10 @@ helpers do
   end
 end
 
-# CRUD function and path for memo
+# CRUD function and path for mem
 module Memo_of_sinatra_db
   CONN = PG.connect(dbname: 'sinatra')
+  private_constant :CONN
 
   class << self
     def all
