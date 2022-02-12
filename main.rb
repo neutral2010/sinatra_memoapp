@@ -55,7 +55,7 @@ module MemoOfSinatraDb
     private
 
     def assert_id_format(id)
-      raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
+      raise "invalid id: #{id}" unless id =~ /\d+/
     end
 
     # def make_for_show_memo(result_of_find)
