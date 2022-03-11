@@ -29,8 +29,8 @@ module MemoOfSinatraDb
 
     def find(id)
       assert_id_format(id)
-      result = CONN.exec('SELECT * FROM memo WHERE id = $1', [id])
-      make_array_from_retrieved_memo(result)
+      result_of_find = CONN.exec('SELECT * FROM memo WHERE id = $1', [id])
+      make_array_from_retrieved_memo(result_of_find)
     end
 
     def create(title, content)
@@ -39,8 +39,8 @@ module MemoOfSinatraDb
 
     def update(id, title, content)
       assert_id_format(id)
-      result = CONN.exec('UPDATE memo SET title = $1, content = $2 WHERE id=$3', [title, content, id])
-      make_array_from_retrieved_memo(result)
+      result_of_update = CONN.exec('UPDATE memo SET title = $1, content = $2 WHERE id=$3', [title, content, id])
+      make_array_from_retrieved_memo(result_of_update)
     end
 
     def delete(id)
@@ -51,7 +51,7 @@ module MemoOfSinatraDb
     private
 
     def assert_id_format(id)
-      raise "invalid id: #{id}" unless id =~ /\d+/
+      raise "invalid id: #{id}" unless id =~ /\A\d+\z/
     end
 
     def make_array_from_retrieved_memo(result)
@@ -73,7 +73,7 @@ get '/memos/new' do
   erb :new
 end
 
-post '/memos/:id' do
+post '/memos' do
   title = params[:title]
   content = params[:content]
   MemoOfSinatraDb.create(title, content)
