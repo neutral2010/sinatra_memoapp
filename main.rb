@@ -59,7 +59,7 @@ module MemoOfSinatraDb
       result.each do |row|
         memos << row
       end
-      @memo = memos[0]
+      memos[0]
     end
   end
 end
