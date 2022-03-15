@@ -4,6 +4,8 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'erb'
 require 'json'
+require 'pg'
+require 'debug'
 
 not_found do
   erb :error
@@ -15,50 +17,55 @@ helpers do
   end
 end
 
-# CRUD function and path for memo
-module DB
+# CRUD function and path for mem
+module MemoOfSinatraDb
+  CONN = PG.connect(dbname: 'sinatra')
+  private_constant :CONN
+
   class << self
     def all
-      all_files = Dir.glob('db/*.json')
-      memos = all_files.map { |all_file| JSON.parse(File.read(all_file), symbolize_names: true) }
-      memos.sort_by { |v| v[:created_at] }
+      CONN.exec('SELECT * FROM memo ORDER BY id ASC;')
     end
 
     def find(id)
       assert_id_format(id)
-      parse_json(id)
+      result_of_find = CONN.exec('SELECT * FROM memo WHERE id = $1', [id])
+      make_array_from_retrieved_memo(result_of_find)
     end
 
-    def save(memo)
-      assert_id_format(memo[:id])
-      dump_json(memo)
+    def create(title, content)
+      CONN.exec('INSERT INTO memo (title, content) VALUES ($1, $2)', [title, content])
+    end
+
+    def update(id, title, content)
+      assert_id_format(id)
+      result_of_update = CONN.exec('UPDATE memo SET title = $1, content = $2 WHERE id=$3', [title, content, id])
+      make_array_from_retrieved_memo(result_of_update)
     end
 
     def delete(id)
       assert_id_format(id)
-      File.delete("./db/#{id}.json")
+      CONN.exec('DELETE FROM memo WHERE id = $1', [id])
     end
 
     private
 
     def assert_id_format(id)
-      raise "invalid id: #{id}" unless id =~ /\A[\w-]+\z/
+      raise "invalid id: #{id}" unless id =~ /\A\d+\z/
     end
 
-    def dump_json(memo)
-      File.open("./db/#{memo[:id]}.json", 'w') do |file|
-        JSON.dump(memo, file)
+    def make_array_from_retrieved_memo(result)
+      memos = []
+      result.each do |row|
+        memos << row
       end
-    end
-
-    def parse_json(id)
-      JSON.parse(File.read("./db/#{id}.json"), symbolize_names: true)
+      memos[0]
     end
   end
 end
 
 get '/' do
-  @memos = DB.all
+  @memos = MemoOfSinatraDb.all
   erb :index
 end
 
@@ -66,41 +73,35 @@ get '/memos/new' do
   erb :new
 end
 
-post '/memos/:id' do
-  memo = {
-    id: SecureRandom.uuid,
-    title: params[:title],
-    content: params[:content],
-    created_at: Time.now
-  }
-  DB.save(memo)
+post '/memos' do
+  title = params[:title]
+  content = params[:content]
+  MemoOfSinatraDb.create(title, content)
   redirect '/'
 end
 
 get '/memos/:id' do
   id = params[:id]
-  @memo = DB.find(id)
+  @memo = MemoOfSinatraDb.find(id)
   erb :show
 end
 
 get '/memos/:id/edit' do
   id = params[:id]
-  @memo = DB.find(id)
+  @memo = MemoOfSinatraDb.find(id)
   erb :edit
 end
 
 patch '/memos/:id' do
+  title = params[:title]
+  content = params[:content]
   id = params[:id]
-  memo = DB.find(id)
-  memo[:title] = params[:title]
-  memo[:content] = params[:content]
-  memo[:created_at] = Time.now
-  DB.save(memo)
+  MemoOfSinatraDb.update(id, title, content)
   redirect("/memos/#{id}")
 end
 
 delete '/memos/:id' do
   id = params[:id]
-  DB.delete(id)
+  MemoOfSinatraDb.delete(id)
   redirect '/'
 end

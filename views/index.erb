@@ -1,7 +1,7 @@
 <h2 class="content_title">All</h2>
 <ul>
   <% @memos.each do |memo| %>
-    <li class="item"><a href="/memos/<%= memo[:id] %>"><%= h(memo[:title]) %></a></li>
+    <li class="item"><a href="/memos/<%= memo['id'] %>"><%= h(memo['title']) %></a></li>
   <% end %>
 </ul>
 <a href="/memos/new" class="btn">Add</a>
